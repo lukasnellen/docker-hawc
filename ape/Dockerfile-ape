@@ -1,0 +1,18 @@
+ARG baseimage=lukasnellen/sysdev:c-6
+FROM $baseimage
+
+ARG ape_version=2.06.00
+
+LABEL vendor="HAWC Observatory" \ 
+      vendor.url="https://www.hawc-observatory.org/" \
+      maintainers="Lukas Nellen <lukas@nucleares.unam.mx>" \
+      name="HAWC development environment" \
+      version="0.01" \
+      apeversion=$ape_version 
+
+ADD ape-hawc-${ape_version}.tar.bz2 /hawc/dist
+COPY ape.rc /hawc/dist
+
+ENV APERC=/hawc/dist/ape.rc USER=hawc APE=/hawc/dist/ape-hawc-${ape_version}/ape
+
+WORKDIR /hawc/dist/ape-hawc-${ape_version}

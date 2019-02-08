@@ -1,0 +1,21 @@
+[DEFAULT]
+base = /hawc/install
+build = /tmp/ape-build
+
+[ape]
+jobs = 8
+mirrors = mx us
+platformPreDependencies =
+distfiles = /hawc/distfiles
+
+[package]
+infoVariables.delete = isHidden
+
+[package aerie]
+makeArgs.append = VERBOSE=1
+
+[package cmake3]
+configureArgs.append = --parallel=8
+
+[package cmake2]
+configureArgs.append = --parallel=8

@@ -1,0 +1,29 @@
+#! /bin/bash
+#
+# Build docker image for ape testing / installing from sysdev image
+#
+# docker-build [[repo] branch] systag
+#
+# Arguments:
+# $systag: system image tag
+# $branch: ape branch, defaults to master
+# $repo:   ape repository, defaults to ape.git
+
+docker_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+args=($@)
+
+systag=${args[-1]}
+branch=${args[-2]:-master}
+repo=${args[-3]:-ape.git}
+
+docker build \
+       -f Dockerfile-ape \
+       -t lukasnellen/hawcape:${systag} \
+       --build-arg baseimage=lukasnellen/sysdev:${systag} \
+       ${docker_dir}
+
+docker build \
+       -t hawcobservatory/hawcbuild:${systag} \
+       -t lukasnellen/hawcbuild:${systag} \
+       --build-arg baseimage=lukasnellen/hawcape:${systag} \
+       ${docker_dir}

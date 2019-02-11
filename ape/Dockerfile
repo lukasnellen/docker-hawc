@@ -18,11 +18,12 @@ ARG ape_version=2.06.00
 
 WORKDIR /hawc
 
-ENV SCL_ENABLE="python27 rh-git29"
+ENV SCL_ENABLE="python27 rh-git29" \
+    BASH_ENV=/bash_env.sh
 
 RUN scl enable python27 "pip install numpy"
 
-COPY ./entrypoint.sh /
+COPY ./entrypoint.sh ./bash_env.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "bash" ]
 
